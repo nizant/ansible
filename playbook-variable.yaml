@@ -1,0 +1,10 @@
+-
+    name: "Add DNS server to resolv.con
+    hosts: all
+    vars:
+      dns_server: 4.4.4.4
+    tasks:
+      -
+        lineinfile:
+          path: /etc/resolv.conf
+          line: 'nameserver {{ dns_server }}'

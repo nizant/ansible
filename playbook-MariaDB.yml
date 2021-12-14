@@ -1,0 +1,15 @@
+-
+    name: MariaDB
+    hosts: centcmd
+    gather_facts: true
+    become: true
+    vars:
+      mysql_root_password: "Password"
+    tasks:
+      -
+        name: install mariadb
+        yum:
+          name:
+            - mariadb-server
+            - python3-PyMySQL
+          state: latest 

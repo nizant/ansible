@@ -1,0 +1,7 @@
+-
+  name: "This is just a test"
+  hosts: all
+  tasks:
+    -
+      name: "ping test"
+      ping:

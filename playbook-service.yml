@@ -1,0 +1,10 @@
+-
+  name: "Start Service in Order"
+  hosts: all
+  tasks:
+    -
+      name: "Start the database service"
+      service: name=mariadb state=started
+    -
+      name: "Start the web service"
+      service: name=httpd state=started

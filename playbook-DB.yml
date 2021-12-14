@@ -1,0 +1,24 @@
+-
+  name: "Install Maria DB"
+  hosts: centcmd
+  tasks:
+    -
+      name: "Install Maria DB"
+      command: yum install -y mariadb-server
+
+#      name: "Start mariadb service"
+#      command: service mariadb Start
+#
+#      name: "Enable mariadb service"
+#      command: systemctl enable mariadb
+#
+#-
+#  name: "Firewall port open for DB"
+#  hosts: centcmd
+#  tasks:
+#    -
+#      name: "Add firewall port"
+#      command: "firewall-cmd --permanent --zone=public --add-port=3306/tcp"
+#
+#      name: "reload firewall"
+#      command: "firewall-cmd --reload"

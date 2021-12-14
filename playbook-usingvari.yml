@@ -1,0 +1,9 @@
+-
+    name: Test connectivity to target servers
+    hosts: all
+    vars:
+      list_of_directories: 'ls -la'
+    tasks:
+      -
+        name: Ping Test
+        command: "{{list_of_directories}}"

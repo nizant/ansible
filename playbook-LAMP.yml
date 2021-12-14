@@ -1,0 +1,57 @@
+---
+- 
+  name: Lamp Server Installation playbook
+  hosts: centgnu
+  remote_user: root
+
+
+  tasks:
+    - name: Add firewall port
+      command: "firewall-cmd --permanent --zone=public --add-port=3306/tcp"
+
+    - name: Installing Apache
+      yum:
+        name: httpd
+        state: installed
+
+    -  name: Enabling httpd service and start the service
+       service:
+         name: httpd
+         enabled: yes
+         state: started
+    
+    - name: Add firewall http port
+      command: "firewall-cmd --permanent --zone=public --add-port=80/tcp"
+    
+    -  name: Install MYSQL DB Community edition
+       yum:
+         name:
+           - mariadb-server
+           - mariadb
+         state: installed
+      
+    -  name: Add firewall MySQL port
+       command: "firewall-cmd --permanent --zone=public --add-port=3306/tcp"
+    
+    -  name: reload firewall
+       command: "firewall-cmd --reload"
+
+    -  name: Start the MYSQL service
+       service:
+         name: mariadb
+         enabled: yes
+         state: started
+
+    -  name: Installing git
+       yum:
+         name:
+          - git
+         state: latest
+      
+    -  name: git clone
+       command: "git clone https://github.com/kodekloudhub/learning-app-ecommerce.git /var/www/html/"
+
+    - name: Copying your php file in the /var/www/html
+      copy:
+       src: /home/atom/index.php
+       dest: /var/www/html/index.php

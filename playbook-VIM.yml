@@ -1,0 +1,7 @@
+-
+ name: "Install vim"
+ hosts: all
+ tasks: 
+  -
+   name: "Install vim"
+   command: yum -y install vim
