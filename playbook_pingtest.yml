@@ -1,7 +1,7 @@
 ---
 -
  name: "Test connectivity to target servers"
- hosts: centcmd,localhost
+ hosts: centcmd, centmaster
  tasks:
   -
    name: Ping Test
