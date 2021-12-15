@@ -1,3 +1,4 @@
 [Linux]
-192.168.1.251
-192.168.1.242
+centmaster ansible_host=192.168.1.251
+centcmd ansible_hosts=192.168.1.242
+centgnu ansible_hosts=192.168.1.241
