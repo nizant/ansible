@@ -2,3 +2,4 @@
 centmaster ansible_host=192.168.1.251
 centcmd ansible_host=192.168.1.242
 centgnu ansible_host=192.168.1.241
+vmx ansible_host=192.168.1.34
