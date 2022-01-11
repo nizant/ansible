@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: Juniper
   roles:
     - "/root/.ansible/roles/juniper.junos"
   connection: local
