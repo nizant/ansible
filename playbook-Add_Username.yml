@@ -1,0 +1,19 @@
+---
+- hosts: all
+  roles:
+    - "/root/.ansible/roles/juniper.junos"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: New user
+      juniper_junos_config:  
+        config_mode: "private"
+        load: "set"
+        src: "/home/ansible-content/username.set"
+        diff: true
+        check: true
+        commit: true
+      register: response
+    - name: Print the changes
+      debug:
+        var: response

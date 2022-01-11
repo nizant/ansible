@@ -1,0 +1,10 @@
+---
+- name: create new user account
+  hosts: all
+  collections:
+    - junipernetworks.junos
+  tasks:
+    - junipernetworks.junos.junos_user:
+        name: testuser
+        role: super-user
+        state: present

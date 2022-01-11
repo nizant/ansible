@@ -1,0 +1,19 @@
+---
+- name: Collect Juniper Facts with Juniper.Device
+  hosts: all
+  gather_facts: no
+  connection: local
+  collections:
+    - juniper.device
+
+  tasks:
+    - name: Collect device facts with Juniper.Device Modules
+      facts:
+      register: facts
+
+    - debug:
+        # var: facts
+        var: '{{ item }}'
+      with_items:
+        - facts
+

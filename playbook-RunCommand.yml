@@ -1,0 +1,30 @@
+---
+- name: Add User
+  hosts: all
+  roles:
+    - role: "/root/.ansible/roles/juniper.junos"
+  #connection: local
+  gather_facts: no
+  # vars:
+  #   provider:
+  #     host: "{{ ansible_host }}"
+  #     port: "{{ netconf_port|string }}"
+  #     timeout: "{{ timeout }}"
+  tasks:
+    - name: create new user using command
+      juniper_junos_command:
+        command:
+          - 'set system login user Ansibleusr uid 2000'
+        # provider: "{{ provider }}"
+      register: show_version
+    - debug:
+        var: show_version
+
+    # - name: Retrieving information from devices running Junos OS
+    #   juniper.device.facts:
+    #     savedir: "{{ playbook_dir }}/output"
+
+    # - name: Print version
+    #   debug:
+    #     var: junos.version
+

@@ -1,0 +1,4 @@
+#vMX ansible_host=192.168.1.34 ansible_connection=local ansible_port=2222 ansible_network_os=junos ansible_user=root ansible_ssh_pass=Lemme1nROOT!
+vMX ansible_host=192.168.1.34 ansible_connection=netconf ansible_port=2222 ansible_network_os=junos nsible_user=root ansible_ssh_pass=Lemme1nROOT! ansible_python_interpreter=/usr/local/bin/python3.7
+#vQFX ansible_host=192.168.100.3 ansible_connection=netconf ansible_port=2222 ansible_network_os=junos ansible_user=root ansible_ssh_pass=Letsgodevops!23
+

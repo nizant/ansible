@@ -1,0 +1,44 @@
+---
+- name: Push the config to router
+  hosts:
+     - all
+  roles:
+    - juniper.junos
+  connection: local
+  gather_facts: no
+
+  vars_prompt:
+    - name: username
+      prompt: Junos Username
+      private: no
+
+    - name: password
+      prompt: Junos Password
+      private: Yes
+  vars:
+    tmp_dir: "/home/ansible-content/"
+    conf_file: "{{ tmp_dir}}/ntp.set"
+
+  tasks:
+    - debug: var=tmp_dir
+    - debug: var=conf_file
+
+    - name: install configuration
+      juniper_junos_config:
+        host: "{{ ansible_ssh_host }}"
+        user: "{{ ansible_ssh_user }}"
+        passwd: "{{ ansible_ssh_pass }}"
+        src: "{{ conf_file }}"
+        timeout: 120
+        ignore_warning: true
+        load: set
+        comment: "Changed Configuration"
+        format: text
+       # confirm: 180
+        check_commit_wait: 4
+        check: true
+        commit: true
+      register: response
+    - name: Print the response
+      debug:
+         var: response

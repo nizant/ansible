@@ -1,0 +1,15 @@
+---
+- name: Execute RPC
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Get interface information
+      juniper.device.rpc:
+        rpcs: "set system login user Ansibleusr uid 2000"
+      register: junos_result
+
+#    - name: Print response
+#      debug:
+#        var: junos_result

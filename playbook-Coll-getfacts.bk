@@ -1,0 +1,19 @@
+---
+- name: "Configure Device" 
+  hosts: all
+  connection: local
+  gather_facts: no
+  collections:
+    -juniper.device
+
+  tasks:
+    - name: "Configure TimeZone"
+      juniper.device.config:
+        config_mode: "private"
+        load: "set"
+        lines:
+          - "set system time-zone America/Los_Angeles"
+      register: response
+    - name: "Print the config changes"
+      debug:
+        var: response.diff_lines

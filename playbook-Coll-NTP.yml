@@ -1,0 +1,13 @@
+---
+- hosts: all
+  roles:
+  - Juniper.junos
+  connection: local
+  gather_facts: no
+
+  - name: Deploy Ansible User
+    junos_install_config:
+      user=ansibleusr
+      file=ntp.set
+      overwrite=false
+      logfile=deploy-user.log

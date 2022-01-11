@@ -1,0 +1,30 @@
+---
+- name: Get Device Facts
+  hosts: all
+  roles:
+    - role: "/root/.ansible/roles/juniper.junos"
+  #connection: local
+  gather_facts: no
+  # vars:
+  #   provider:
+  #     host: "{{ ansible_host }}"
+  #     port: "{{ netconf_port|string }}"
+  #     timeout: "{{ timeout }}"
+  tasks:
+    - name: check version via cmd lines
+      juniper_junos_command:
+        command:
+          - 'show version'
+        # provider: "{{ provider }}"
+      register: show_version
+    - debug:
+        var: show_version
+
+    # - name: Retrieving information from devices running Junos OS
+    #   juniper.device.facts:
+    #     savedir: "{{ playbook_dir }}/output"
+
+    # - name: Print version
+    #   debug:
+    #     var: junos.version
+
