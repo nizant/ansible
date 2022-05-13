@@ -1,0 +1,37 @@
+---
+- name: Collect Juniper Facts 
+  hosts: all
+  gather_facts: false
+  vars:
+    ansible_connection: netconf
+    ansible_network_os: junos
+  collections:
+    - junipernetworks.junos.junos_facts
+
+  tasks:
+    - name: Retrieve Junos OS version
+      junos_command:
+        commands: show version
+      register: junos_output
+
+    - name: collect default set of facts
+      junos_facts:
+
+    - name: collect default set of facts and configuration
+      junos_facts:
+        gather_subset: config
+        config_format: json
+
+    - name: Gather legacy and resource facts
+      junos_facts:
+        gather_subset: all
+        gather_network_resources: all
+        config_format: json
+
+    - name: Print version
+      debug:
+        var: junos_output
+
+    - name: Display the config
+      debug:
+        msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
