@@ -11,7 +11,7 @@ vQFX ansible_host=10.80.38.30
 #[all:vars]
 #ansible_connection=netconf
 #ansible_user=ansibleusr
-#ansible_ssh_pass=Ansiblepwd
+#ansible_ssh_pass=********
 #ansible_ssh_port=2222
 ##ansible_connection=juniper.device.pyez
 ##ansible_connection=ansible.netcommon.netconf
