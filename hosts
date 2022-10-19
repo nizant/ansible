@@ -1,10 +1,10 @@
 [Linux]
-centmaster ansible_host=192.168.1.251
-centcmd ansible_host=192.168.1.242
-centgnu ansible_host=192.168.1.241
+#centmaster ansible_host=192.168.1.251
+#centcmd ansible_host=192.168.1.242
+#centgnu ansible_host=192.168.1.241
 
 [Juniper]
-vMX ansible_host=192.168.1.34
+#vMX ansible_host=192.168.1.34
 vQFX ansible_host=10.80.38.30
 #vQFX ansible_host=192.168.1.37
 
