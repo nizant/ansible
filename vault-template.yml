@@ -1,0 +1,18 @@
+# Ansible Vault file for sensitive data
+# Create this file with: ansible-vault create group_vars/all/vault.yml
+
+$ANSIBLE_VAULT;1.1;AES256
+# This is a template - create the actual vault file with your credentials
+
+# Example structure (encrypted):
+vault_juniper_user: root
+vault_juniper_password: your_password_here
+vault_linux_user: ansible
+vault_linux_password: your_linux_password
+vault_ansible_user_ssh_key: ssh-rsa AAAAB3NzaC1yc2E... your_public_key_here
+
+# To create this file properly, run:
+# mkdir -p group_vars/all
+# ansible-vault create group_vars/all/vault.yml
+#
+# Then add the variables above with your actual values

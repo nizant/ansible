@@ -1,0 +1,64 @@
+---
+- name: "Add User to Juniper Device - Updated Version"
+  hosts: juniper
+  gather_facts: false
+  collections:
+    - junipernetworks.junos
+
+  vars:
+    new_users:
+      - username: "ansibleusr"
+        uid: 2000
+        class: "super-user"
+        full_name: "Ansible Automation User"
+        authentication:
+          ssh_rsa: "{{ vault_ansible_user_ssh_key }}"
+      - username: "netadmin"
+        uid: 2001
+        class: "operator"
+        full_name: "Network Administrator"
+
+  tasks:
+    - name: "Create backup before user creation"
+      junipernetworks.junos.junos_config:
+        backup: true
+        backup_options:
+          filename: "pre_user_backup_{{ inventory_hostname }}_{{ ansible_date_time.epoch }}.conf"
+          dir_path: "./backups"
+
+    - name: "Add users to Juniper device"
+      junipernetworks.junos.junos_user:
+        aggregate: "{{ new_users }}"
+        purge: false
+        state: present
+      register: user_result
+
+    - name: "Verify user creation"
+      junipernetworks.junos.junos_command:
+        commands:
+          - show configuration system login
+        display: text
+      register: user_verification
+
+    - name: "Display user configuration"
+      ansible.builtin.debug:
+        msg: |
+          Users successfully configured!
+          Changes: {{ user_result.diff.prepared | default('No changes needed') }}
+
+    - name: "Show current user configuration"
+      ansible.builtin.debug:
+        var: user_verification.stdout_lines
+
+    - name: "Test user access (if SSH key provided)"
+      junipernetworks.junos.junos_command:
+        commands:
+          - show system users
+        display: text
+      register: active_users
+      when: user_result.changed
+
+    - name: "Display active users"
+      ansible.builtin.debug:
+        var: active_users.stdout_lines
+      when: user_result.changed

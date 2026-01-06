@@ -1,0 +1,43 @@
+---
+- name: "Configure Juniper Device - Updated Version"
+  hosts: juniper
+  gather_facts: false
+  collections:
+    - junipernetworks.junos
+
+  vars:
+    junos_config:
+      - "set system time-zone America/Los_Angeles"
+      - "set system ntp server 0.pool.ntp.org"
+      - "set system ntp server 1.pool.ntp.org"
+
+  tasks:
+    - name: "Configure system settings"
+      junipernetworks.junos.junos_config:
+        lines: "{{ junos_config }}"
+        comment: "Configuration applied by Ansible - {{ ansible_date_time.iso8601 }}"
+        confirmed: 10
+        backup: true
+        backup_options:
+          filename: "{{ inventory_hostname }}_backup_{{ ansible_date_time.epoch }}.conf"
+          dir_path: "./backups"
+      register: config_result
+
+    - name: "Display configuration changes"
+      ansible.builtin.debug:
+        msg: |
+          Configuration applied successfully!
+          Backup file: {{ config_result.backup_path }}
+          Changes made: {{ config_result.diff.prepared | default('No changes') }}
+
+    - name: "Verify configuration"
+      junipernetworks.junos.junos_command:
+        commands:
+          - show system uptime
+          - show configuration system time-zone
+        display: text
+      register: verify_output
+
+    - name: "Show verification results"
+      ansible.builtin.debug:
+        var: verify_output.stdout_lines

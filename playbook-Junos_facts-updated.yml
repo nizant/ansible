@@ -1,0 +1,55 @@
+---
+- name: "Collect Juniper Facts - Updated Version"
+  hosts: juniper
+  gather_facts: false
+  collections:
+    - junipernetworks.junos
+    - ansible.netcommon
+
+  tasks:
+    - name: "Retrieve Junos OS version using updated module"
+      junipernetworks.junos.junos_command:
+        commands:
+          - show version
+        display: text
+      register: junos_output
+
+    - name: "Collect default set of facts"
+      junipernetworks.junos.junos_facts:
+        gather_subset:
+          - default
+          - hardware
+          - interfaces
+
+    - name: "Collect configuration facts"
+      junipernetworks.junos.junos_facts:
+        gather_subset: config
+        config_format: json
+
+    - name: "Gather network resource facts"
+      junipernetworks.junos.junos_facts:
+        gather_subset: all
+        gather_network_resources:
+          - interfaces
+          - vlans
+          - lag_interfaces
+        config_format: json
+
+    - name: "Print version output"
+      ansible.builtin.debug:
+        var: junos_output.stdout_lines
+
+    - name: "Display device information"
+      ansible.builtin.debug:
+        msg: |
+          Device: {{ ansible_net_hostname }}
+          OS Version: {{ ansible_net_version }}
+          Model: {{ ansible_net_model }}
+          Serial: {{ ansible_net_serialnum }}
+          Uptime: {{ ansible_net_uptime }}
+
+    - name: "Save facts to file"
+      ansible.builtin.copy:
+        content: "{{ ansible_facts | to_nice_json }}"
+        dest: "./facts_{{ inventory_hostname }}.json"
+      delegate_to: localhost
