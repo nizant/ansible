@@ -1,4 +1,4 @@
-# 🌐 Ansible Network Automation
+# 🌐 Ansible Network Automation by Nishant Shah
 
 A comprehensive Ansible-based network automation toolkit for managing Juniper devices and network infrastructure.
 
@@ -350,12 +350,6 @@ ansible-inventory --list --yaml > inventory-report.yml
 - Include error handling
 - Document all variables
 - Test with `--check` mode
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📞 Support
 
 ### Documentation
 - [Ansible Documentation](https://docs.ansible.com/)
